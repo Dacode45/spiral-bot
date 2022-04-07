@@ -142,11 +142,7 @@ impl EventHandler for BotHandler {
             .set_application_commands(&ctx.http, |commands| register_commands(commands))
             .await
             .expect("Couldn't create guild commands");
-
-        let commands = GuildId(519259461437882399)
-            .set_application_commands(&ctx.http, |commands| register_commands(commands))
-            .await
-            .expect("Couldn't create guild commands");
+            
 
         info!(
             "The following guild commands are available: {:#?}",
