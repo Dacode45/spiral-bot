@@ -99,7 +99,7 @@ impl BotHandler {
 
             msgs.push(format!(
                 "[{}] {} \"{}\"",
-                parse_timestamp(update.time).to_rfc3339(),
+                parse_timestamp(update.time).to_rfc2822(),
                 username,
                 update.message
             ));
