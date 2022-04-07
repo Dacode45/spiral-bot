@@ -88,17 +88,22 @@ impl BotHandler {
         }
         let updates = updates.unwrap();
 
-        let msgs: Vec<String> = updates
-            .iter()
-            .map(|update| {
-                format!(
-                    "[{}]<@{}> \"{}\"",
-                    parse_timestamp(update.time).to_rfc3339(),
-                    UserId(update.user_id),
-                    update.message
-                )
-            })
-            .collect();
+        let mut msgs = Vec::new();
+
+        for update in &updates {
+            let username = UserId(update.user_id)
+                .to_user(&ctx.http)
+                .await
+                .map(|user| user.name.clone())
+                .unwrap_or(update.user_id.to_string());
+
+            msgs.push(format!(
+                "[{}]{} \"{}\"",
+                parse_timestamp(update.time).to_rfc3339(),
+                username,
+                update.message
+            ));
+        }
 
         let msgs = msgs.join("\n");
 
