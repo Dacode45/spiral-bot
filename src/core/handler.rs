@@ -59,9 +59,10 @@ impl BotHandler {
     async fn update(&self, ctx: Context, command: ApplicationCommandInteraction) {
         info!("calling update!");
         let user = get_caller_user_id(&command).expect("Couldn't get user id");
+        let username = get_caller_user_name(&command).expect("Couldn't get user id");
         let msg = get_string_option(&command, 0).expect("Couldn't get message");
 
-        let did_update = self.app.update(Update::new(user.0, msg));
+        let did_update = self.app.update(Update::new(user.0, msg.clone()));
 
         if let Err(e) = did_update {
             warn!("{}", e);
@@ -70,7 +71,8 @@ impl BotHandler {
             return;
         }
 
-        self.send_msg(&ctx, &command, "Got it!").await;
+        self.send_msg(&ctx, &command, format!("{}: \"{}\"", username, msg))
+            .await;
     }
 
     async fn list_updates(&self, ctx: Context, command: ApplicationCommandInteraction) {
@@ -142,7 +144,6 @@ impl EventHandler for BotHandler {
             .set_application_commands(&ctx.http, |commands| register_commands(commands))
             .await
             .expect("Couldn't create guild commands");
-            
 
         info!(
             "The following guild commands are available: {:#?}",
@@ -182,6 +183,16 @@ fn get_caller_user_id(
     command: &ApplicationCommandInteraction,
 ) -> Option<serenity::model::id::UserId> {
     let user_id = match command.member.as_ref().map(|m| m.user.id) {
+        Some(ref id) => id.clone(),
+        None => {
+            return None;
+        }
+    };
+    return Some(user_id);
+}
+
+fn get_caller_user_name(command: &ApplicationCommandInteraction) -> Option<String> {
+    let user_id = match command.member.as_ref().map(|m| m.user.name.clone()) {
         Some(ref id) => id.clone(),
         None => {
             return None;
