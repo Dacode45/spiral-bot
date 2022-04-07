@@ -98,7 +98,7 @@ impl BotHandler {
                 .unwrap_or(update.user_id.to_string());
 
             msgs.push(format!(
-                "[{}]{} \"{}\"",
+                "[{}] {} \"{}\"",
                 parse_timestamp(update.time).to_rfc3339(),
                 username,
                 update.message
