@@ -15,7 +15,7 @@ pub fn get_time() -> Duration {
 
 pub fn parse_timestamp(timestamp: u64) -> chrono::DateTime<Tz> {
     let native_dt = NaiveDateTime::from_timestamp(timestamp as i64, 0);
-    let dt = Central.from_local_datetime(&native_dt).unwrap();
+    let dt = Central.from_utc_datetime(&native_dt);
 
     return dt;
 }
