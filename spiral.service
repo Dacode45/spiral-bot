@@ -1,0 +1,16 @@
+[Unit]
+Description=Spiral Bot
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+WorkingDirectory=/home/spiral
+ExecStart=/home/spiral/bin/spiral
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=spiral-bot
+Environment="RUST_LOG=spiral=debug"
+
+[Install]
+WantedBy=multi-user.target

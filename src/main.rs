@@ -44,8 +44,10 @@ async fn main() {
         .expect("Expected an application id in the environment")
         .parse()
         .expect("application id is not a valid id");
+    let redis_url = env::var("REDIS_URL").expect("Expected a REDIS_URL in the environment");
 
-    let app = App::new();
+    let db = DB::new(&redis_url).expect("Couldn't connect");
+    let app = App::new(db);
 
     // Build our client.
     let mut client = Client::builder(token)
