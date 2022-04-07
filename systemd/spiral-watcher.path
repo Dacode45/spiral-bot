@@ -1,0 +1,4 @@
+[Path]
+PathModified=/home/spiral/bin/spiral
+[Install]
+WantedBy=multi-user.target

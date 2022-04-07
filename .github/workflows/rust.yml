@@ -47,7 +47,7 @@ jobs:
       - name: Deploy binary with rsync
         uses: appleboy/scp-action@master
         with:
-          source: ./spiral.service
+          source: ./systemd/spiral-watcher.path,./systemd/spiral-watcher.service,./systemd/spiral.service
           target: /home/spiral/.config/systemd/user/
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
