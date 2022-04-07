@@ -1,0 +1,27 @@
+[package]
+name = "spiral-bot"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+dotenv = "0.15"
+serde_json = "1.0"
+lazy_static = "1.4"
+serde = { version = "1", features = ["derive"] }
+rand = "0.8"
+log = "0.4"
+pretty_env_logger = "0.4"
+
+[dependencies.serenity]
+version = "0.10"
+default-features = false
+features = ["client", "gateway", "rustls_backend", "model", "unstable_discord_api"] 
+
+[dependencies.tokio]
+version = "1.0"
+features = ["macros", "rt-multi-thread"]
+
+[dev-dependencies]
+tokio-test = "*"

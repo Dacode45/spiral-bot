@@ -1,0 +1,7 @@
+/target
+# .vscode
+service-account.json
+.env
+firebaseconfig.json
+patchcoin.db
+private.md
